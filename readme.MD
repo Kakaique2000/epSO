@@ -8,7 +8,12 @@
 >3. mudar o quantum (de fixo na classe para ser lido do arquivo quantum.txt)
 >4. Gerar o logfile
 
-## para executar:
+### para executar:
 > `npm start -s`
 > ou
 > **Execute**  o arquivo *start.bat*
+
+### para gerar a documentação:
+> `npm run javadoc`
+> ou
+> `javadoc -d .docs/  Erros.java Escalonador.java Processo.java Bcp.java`
