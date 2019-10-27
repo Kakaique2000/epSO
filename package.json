@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "javac Escalonador.java -d .output/ && java -classpath .output Escalonador",
+    "start": "start.bat",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
