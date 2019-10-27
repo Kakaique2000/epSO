@@ -27,7 +27,8 @@ public class Escalonador {
 		File processosFolder = new File(Paths.get("processos").toString());
 		File[] listOfFiles = validaArquivos(processosFolder);
 		Arrays.sort(listOfFiles);
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < listOfFiles.length; i++) {
+			String nomeArquivo = listOfFiles[i].getName();
 			try (BufferedReader br = new BufferedReader(new FileReader(listOfFiles[i]))) {
 				if (i < 10) {
 					List<String> textSegment = new ArrayList<String>();
@@ -35,17 +36,21 @@ public class Escalonador {
 					while ((line = br.readLine()) != null) {
 						textSegment.add(line);
 					}
-					String processName = textSegment.get(0); //Seta o nome do processo de acordo com o valor da primeira linha
-					char[] arranjoNome = processName.toCharArray();
-					nome_processos[i] = processName;
-					int priority = Integer.parseInt(Files.readAllLines(Paths.get("processos/prioridades.txt")).get(i));
-					if (priority > maior_prioridade)
-						maior_prioridade = priority;
-					Processo process = new Processo(processName, priority, textSegment,
-							Integer.parseInt(processName.substring(6, arranjoNome.length)));
-					lista_teste.add(process);
-					Bcp bloco = new Bcp(priority, processName);
-					tabela_de_processos.put(processName, bloco);
+					if(checaProcesso(nomeArquivo)){
+						String processName = textSegment.get(0); //Seta o nome do processo de acordo com o valor da primeira linha
+						char[] arranjoNome = processName.toCharArray();
+						nome_processos[i] = processName;
+						
+						int priority = getNumeroProcesso(Files.readAllLines(Paths.get("processos/prioridades.txt")), nomeArquivo);
+						if (priority > maior_prioridade)
+							maior_prioridade = priority;
+						Processo process = new Processo(processName, priority, textSegment,
+								Integer.parseInt(processName.substring(6, arranjoNome.length)));
+						lista_teste.add(process);
+						Bcp bloco = new Bcp(priority, processName);
+						tabela_de_processos.put(processName, bloco);
+					}
+				
 				}
 
 				if (i == 11)
@@ -55,6 +60,36 @@ public class Escalonador {
 			}
 		}
 	}
+	
+	/**
+	 * Dado um nome de arquivo retorna se o mesmo é um arquivo de processo ou arquivo de prioridades ou é o arquivo de quantum
+	 */
+	private static boolean checaProcesso(String nomeArquivo) {
+		if(nomeArquivo.equals("prioridades.txt") || nomeArquivo.equals("quantum.txt"))
+		return false;
+		return true;
+	}
+
+	/**
+	 * Obtêm o numero do processo a partir da string com o nome do processo
+	 * 
+	 * Trocando todos os caracteres não números do nome do processo por vazio
+	 */
+	private static int getNumeroProcesso(List<String> strings, String nomeArquivoProcura) {
+
+		int numero = -1;
+		for (String nome : strings) {
+			if(nome.equals(nomeArquivoProcura))
+				{
+					numero = Integer.parseInt(nome.replaceAll("\\D", ""));
+					return numero;
+				}
+		}
+		Erros.erroProcessoNaoEncontradoNaListaDePrioridades(strings, nomeArquivoProcura);
+		return numero;
+	}
+
+
 
 	/**
 	 * Função responsável por fazer uma pré validação dos arquivos dentro da pasta processos (Como o nome do arquivo, se tem prioridade, quantum, etc)
