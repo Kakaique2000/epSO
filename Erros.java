@@ -15,7 +15,7 @@ public class Erros {
 
     /**
      * Erro que ocorre quando o diretório dos processos não possui os arquivos necessários para a execução 
-     * @param diretorio
+     * @param diretorio pasta processos
      */
     public static void erroArquivos(String diretorio, String... arquivos){
         System.out.println("O diretorio " + diretorio + " nao possui os arquivos necessarios para a execucao do programa");
@@ -26,7 +26,7 @@ public class Erros {
     }
     /**
      * Erro que ocorre quando o diretório dos processos não possui os arquivos necessários para a execução 
-     * @param diretorio
+     * @param diretorio  pasta processos
      */
     public static void erroArquivos(String diretorio){
         System.out.println("O diretorio " + diretorio + " nao possui os arquivos necessarios para a execucao do programa");
@@ -48,6 +48,11 @@ public class Erros {
         System.exit(-16);
     }
 
+    /**
+     * Erro que ocorre quando existem arquivos estranhos na pasta de processo 
+     * @param diretorio pasta processos
+     * @param arquivo arquivo estranho encontrado
+     */
     public static void erroArquivoNaoValidoEmProcessos(String diretorio, String arquivo) {
         System.out.println("Arquivo estranho na pasta " + diretorio + ": \"" + arquivo + "\" (so eh permitido processo(numero).txt ou prioridades.txt)");
         System.exit(-18);

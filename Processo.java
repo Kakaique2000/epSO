@@ -1,6 +1,11 @@
+
 import java.util.*;
-	
-class Processo implements Comparable<Processo> {
+
+/**
+ * Processo
+ * Classe que representa um objeto de processo
+ */
+public class Processo implements Comparable<Processo> {
 	private String nome;
 	private int valorNome;
 	private int contador_de_programa = 0;
