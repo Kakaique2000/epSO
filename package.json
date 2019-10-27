@@ -1,0 +1,20 @@
+{
+  "name": "ep-so",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "javac Escalonador.java -d .output/ && java -classpath .output Escalonador",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kakaique2000/epSO.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kakaique2000/epSO/issues"
+  },
+  "homepage": "https://github.com/Kakaique2000/epSO#readme"
+}
