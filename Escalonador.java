@@ -48,6 +48,11 @@ class Escalonador {
 		}
 	}
 
+	/**
+	 * Função responsável por fazer uma pré validação dos arquivos dentro da pasta processos (Como o nome do arquivo, se tem prioridade, quantum, etc)
+	 * @param diretorio
+	 * @return Lista dos arquivos lidos
+	 */
 	private static File[] validaArquivos(File diretorio) {
 		// Trata pasta Vazia
 		String nomeDiretorio = diretorio.getName();
@@ -63,17 +68,26 @@ class Escalonador {
 			Erros.erroArquivos(nomeDiretorio);
 		}
 
+		/**
+		 * Se ja encontrou o arquivo de prioridades na pasta
+		 */
 		boolean prioridades = false;
+		/**
+		 * Se ja encontrou o arquivo de quantum na pasta
+		 */
+		boolean quantum = false;
 
 		for (File file : listOfFiles) {
 			String nomeArquivo = file.getName();
 			if(!prioridades && nomeArquivo.equals("prioridades.txt")) prioridades = true;
+			if(!quantum && nomeArquivo.equals("quantum.txt")) quantum = true;
 
-			if(!(Pattern.matches("prioridades.txt|processo\\d+.txt", nomeArquivo))){
+			if(!(Pattern.matches("prioridades.txt|quantum.txt|\\d+.txt", nomeArquivo))){
 				Erros.erroArquivoNaoValidoEmProcessos(nomeDiretorio, nomeArquivo);
 			}
 		}
 		if(!prioridades) Erros.erroArquivoPrioridadeFaltando(nomeDiretorio);
+		if(!quantum) Erros.erroArquivoQuantumFaltando(nomeDiretorio);
 		
 		return listOfFiles;
 
