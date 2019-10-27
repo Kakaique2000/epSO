@@ -19,42 +19,33 @@ class Escalonador {
 		File processosFolder = new File(Paths.get("processos").toString());
 		File[] listOfFiles = validaArquivos(processosFolder);
 		Arrays.sort(listOfFiles);
+		for (int i = 0; i < 12; i++) {
+			try (BufferedReader br = new BufferedReader(new FileReader(listOfFiles[i]))) {
+				if (i < 10) {
+					List<String> textSegment = new ArrayList<String>();
+					String line;
+					while ((line = br.readLine()) != null) {
+						textSegment.add(line);
+					}
+					String processName = textSegment.get(0);
+					char[] arranjoNome = processName.toCharArray();
+					nome_processos[i] = processName;
+					int priority = Integer.parseInt(Files.readAllLines(Paths.get("processos/prioridades.txt")).get(i));
+					if (priority > maior_prioridade)
+						maior_prioridade = priority;
+					Processo process = new Processo(processName, priority, textSegment,
+							Integer.parseInt(processName.substring(6, arranjoNome.length)));
+					lista_teste.add(process);
+					Bcp bloco = new Bcp(priority, processName);
+					tabela_de_processos.put(processName, bloco);
+				}
 
-		Map<Integer,List<String>> arquivos;
-
-		int i = 0;
-		for (File file : listOfFiles) {
-			
+				if (i == 11)
+					quantum = Integer.parseInt(br.readLine());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
-
-		// for (int i = 0; i < 12; i++) {
-		// 	try (BufferedReader br = new BufferedReader(new FileReader(listOfFiles[i]))) {
-		// 		if (i < 10) {
-		// 			List<String> textSegment = new ArrayList<String>();
-		// 			String line;
-		// 			while ((line = br.readLine()) != null) {
-		// 				textSegment.add(line);
-		// 			}
-		// 			String processName = textSegment.get(0);
-		// 			char[] arranjoNome = processName.toCharArray();
-		// 			nome_processos[i] = processName;
-		// 			int priority = Integer.parseInt(Files.readAllLines(Paths.get("processos/prioridades.txt")).get(i));
-		// 			if (priority > maior_prioridade)
-		// 				maior_prioridade = priority;
-		// 			Processo process = new Processo(processName, priority, textSegment,
-		// 					Integer.parseInt(processName.substring(6, arranjoNome.length)));
-		// 			lista_teste.add(process);
-		// 			Bcp bloco = new Bcp(priority, processName);
-		// 			tabela_de_processos.put(processName, bloco);
-		// 		}
-
-		// 		if (i == 11)
-		// 			quantum = Integer.parseInt(br.readLine());
-		// 	} catch (IOException e) {
-		// 		e.printStackTrace();
-		// 	}
-		// }
 	}
 
 	private static File[] validaArquivos(File diretorio) {
