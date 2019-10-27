@@ -41,7 +41,7 @@ public class Escalonador {
 						char[] arranjoNome = processName.toCharArray();
 						nome_processos[i] = processName;
 						
-						int priority = getNumeroProcesso(Files.readAllLines(Paths.get("processos/prioridades.txt")), nomeArquivo);
+						int priority = getPrioridadeProcesso(Files.readAllLines(Paths.get("processos/prioridades.txt")), nomeArquivo);
 						if (priority > maior_prioridade)
 							maior_prioridade = priority;
 						Processo process = new Processo(processName, priority, textSegment,
@@ -71,22 +71,19 @@ public class Escalonador {
 	}
 
 	/**
-	 * Obtêm o numero do processo a partir da string com o nome do processo
-	 * 
-	 * Trocando todos os caracteres não números do nome do processo por vazio
+	 * Obtêm o numero do processo a partir da linha em que o nome do arquivo do processo for encontrado
 	 */
-	private static int getNumeroProcesso(List<String> strings, String nomeArquivoProcura) {
+	private static int getPrioridadeProcesso(List<String> strings, String nomeArquivoProcura) {
 
-		int numero = -1;
-		for (String nome : strings) {
-			if(nome.equals(nomeArquivoProcura))
-				{
-					numero = Integer.parseInt(nome.replaceAll("\\D", ""));
-					return numero;
-				}
+		int numeroLinhaProcesso = Integer.parseInt(nomeArquivoProcura.replaceAll("\\D", ""));
+		int prioridade = -1;
+		try {
+			prioridade = Integer.parseInt(strings.get(numeroLinhaProcesso-1));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Erros.erroProcessoNaoEncontradoNaListaDePrioridades(strings, nomeArquivoProcura);
 		}
-		Erros.erroProcessoNaoEncontradoNaListaDePrioridades(strings, nomeArquivoProcura);
-		return numero;
+		return prioridade;
 	}
 
 

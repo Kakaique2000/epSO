@@ -64,7 +64,7 @@ public class Erros {
      * Erro que ocorre quando  não é encontrado o processo na lista de prioridades
      */
 	public static void erroProcessoNaoEncontradoNaListaDePrioridades(List<String> strings, String nomeArquivoProcura) {
-        System.err.println(nomeArquivoProcura + " nao encontrado na lista de prioridades" + strings);
+        System.err.println(nomeArquivoProcura + " excede o indice do arquivo de prioridades" + strings);
         System.exit(-20);
 	}
     
