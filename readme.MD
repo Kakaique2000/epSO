@@ -7,6 +7,7 @@
 >2. Fazer funcionar com a lista de prioridades e o nome do processo no padrão estabelecido no documento do EP 
 >3. mudar o quantum (de fixo na classe para ser lido do arquivo quantum.txt)
 >4. Gerar o logfile
+>5. Gerar os gráficos
 
 ### para executar:
 > `npm start -s`
