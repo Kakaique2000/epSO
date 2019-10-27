@@ -2,10 +2,10 @@
 import java.util.*;
 
 /**
- * Processo
- * Classe que representa um objeto de processo
+ * Processo Classe que representa um objeto de processo
  */
 public class Processo implements Comparable<Processo> {
+	private String nomeArquivo;
 	private String nome;
 	private int valorNome;
 	private int contador_de_programa = 0;
@@ -14,7 +14,6 @@ public class Processo implements Comparable<Processo> {
 	private int x = 0;
 	private int y = 0;
 
-
 	private int tempoBloqueado = 0;
 	private int numQuantum = 1;
 
@@ -22,7 +21,7 @@ public class Processo implements Comparable<Processo> {
 	private List<String> comandos;
 	private int creditos = -1;
 
-	public Processo(String name,int priority, List<String> textSegment, int valor) {
+	public Processo(String name, int priority, List<String> textSegment, int valor) {
 		this.nome = name;
 		this.prioridade = priority;
 		this.comandos = textSegment;
@@ -30,9 +29,15 @@ public class Processo implements Comparable<Processo> {
 		this.valorNome = valor;
 	}
 
+	public String getNomeArquivo() {
+		return nomeArquivo;
+	}
 
+	public void setNomeArquivo(String nomeArquivo) {
+		this.nomeArquivo = nomeArquivo;
+	}
 
-	public void aumentaQuantum(){
+	public void aumentaQuantum() {
 		this.numQuantum++;
 	}
 

@@ -46,6 +46,7 @@ public class Escalonador {
 							maior_prioridade = priority;
 						Processo process = new Processo(processName, priority, textSegment,
 								Integer.parseInt(processName.substring(6, arranjoNome.length)));
+						process.setNomeArquivo(nomeArquivo);
 						lista_teste.add(process);
 						Bcp bloco = new Bcp(priority, processName);
 						tabela_de_processos.put(processName, bloco);
@@ -141,13 +142,12 @@ public class Escalonador {
 
 			Deque<Processo> process = new LinkedList<>();
 
-			for (int j = 0; j < 10; j++) {
+			for (int j = 1; j < lista_teste.size()+1; j++) {
 				try {
-					int prioridade_atual = Integer
-							.parseInt(Files.readAllLines(Paths.get("processos/prioridades.txt")).get(j));
+					int prioridade_atual = getPrioridadeProcesso(Files.readAllLines(Paths.get("processos/prioridades.txt")), j + "");
 
 					if (prioridade_atual == i)
-						process.addLast(lista_teste.get(j));
+						process.addLast(lista_teste.get(j-1));
 
 				} catch (IOException e) {
 					e.printStackTrace();
