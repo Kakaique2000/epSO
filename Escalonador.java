@@ -1,10 +1,15 @@
+
 import java.io.*;
 import java.util.*;
 import java.util.regex.*;  
 
 import java.nio.file.*;
 
-class Escalonador {
+/**
+ * Escalonador
+ * Classe responsável por carregar e fazer o escalonamento dos processos carregados
+ */
+public class Escalonador {
 
 	private static List<Processo> lista_teste = new ArrayList<Processo>();
 	private static List<Deque<Processo>> lista_de_processos_prontos = new ArrayList<Deque<Processo>>();
@@ -14,6 +19,9 @@ class Escalonador {
 	private static int maior_prioridade = 0;
 	private static int quantum = -1;
 
+	/**
+	 * Carrega os de prioridade e de processo
+	 */
 	public static void loadFiles() {
 
 		File processosFolder = new File(Paths.get("processos").toString());
@@ -27,7 +35,7 @@ class Escalonador {
 					while ((line = br.readLine()) != null) {
 						textSegment.add(line);
 					}
-					String processName = textSegment.get(0);
+					String processName = textSegment.get(0); //Seta o nome do processo de acordo com o valor da primeira linha
 					char[] arranjoNome = processName.toCharArray();
 					nome_processos[i] = processName;
 					int priority = Integer.parseInt(Files.readAllLines(Paths.get("processos/prioridades.txt")).get(i));
@@ -50,7 +58,7 @@ class Escalonador {
 
 	/**
 	 * Função responsável por fazer uma pré validação dos arquivos dentro da pasta processos (Como o nome do arquivo, se tem prioridade, quantum, etc)
-	 * @param diretorio
+	 * @param diretorio pasta processos
 	 * @return Lista dos arquivos lidos
 	 */
 	private static File[] validaArquivos(File diretorio) {
@@ -93,6 +101,9 @@ class Escalonador {
 
 	}
 
+	/**
+	 * Cria a lista de prioridades baseado do arquivo prioridades.txt
+	 */
 	public static void criandoListaPrioridades() {
 		for (int i = maior_prioridade; i > 0; i--) {
 
@@ -119,6 +130,9 @@ class Escalonador {
 		lista_de_processos_prontos.add(prioridade0);
 	}
 
+	/**
+	 * Printa na tela a ordem dos processos prontos
+	 */
 	public static void printaOrdemProntos() {
 
 		for (int i = 0; i <= maior_prioridade; i++) {
@@ -136,6 +150,9 @@ class Escalonador {
 	// //Collections.sort(lista_de_processos_prontos.get(fila));
 	// }
 
+	/**
+	 * Verifica a lista de bloqueados
+	 */
 	public static void checaBloquados() {
 		Iterator it = lista_de_bloqueados.iterator();
 
@@ -156,6 +173,15 @@ class Escalonador {
 
 	}
 
+	/**
+	 * Atualiza o BCP
+	 * @param bloco classe do BCP
+	 * @param pc1 contador do programa
+	 * @param estado Estado do processo
+	 * @param x valor x do processo
+	 * @param y valor y do processo
+	 * @param credit Quantidade de creditos restantes do processo
+	 */
 	public static void atualizaBcp(Bcp bloco, int pc1, String estado, int x, int y, int credit) {
 		bloco.setPc(pc1);
 		bloco.setEstado(estado);
@@ -164,6 +190,10 @@ class Escalonador {
 		bloco.setCreditos(credit);
 	}
 
+	/**
+	 * Executa os processos de acordo com a fila
+	 * @param fila número da fila a ser executada
+	 */
 	public static void executa(int fila) {
 
 		while (lista_de_processos_prontos.get(fila).size() > 0) {

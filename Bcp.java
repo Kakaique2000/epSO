@@ -1,6 +1,12 @@
+
+
 import java.util.*;
 	
-class Bcp {
+/**
+ * Bcp
+ * Classe que representa o bloco de controle de processos
+ */
+public class Bcp {
 
 	// aqui deve ter os creditos e nao no processo
 	private int contador_de_programa = -1;
